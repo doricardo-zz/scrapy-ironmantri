@@ -45,9 +45,8 @@ def all_results():
 
     return corridas
 
-def results_brasil(ano, corrida):
-
-    return results(ano, corrida, '', '', 'BRA')
+#def results_brasil(ano, corrida):
+#    return results(ano, corrida, '', '', 'BRA')
 
 def results_todos(ano, corrida):
 

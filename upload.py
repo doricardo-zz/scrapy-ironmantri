@@ -20,6 +20,7 @@ with ftplib.FTP('ftp.doricardo.com') as ftp:
                 if not res.startswith('226'):
                     print('Upload failed: ' + res + ' -' + filename)
             time.sleep(1)
+            os.rename('files/' + filename, 'files/bkp/' + filename)
 
     except ftplib.all_errors as e:
         print('FTP error:', e)

@@ -1,10 +1,10 @@
 import sys
 import scrapy
-#import pandas as pd
 
-lista = ['M','F']
+lista = ['M','F']s
 ano = sys.argv[1]
-for corrida in scrapy.all_results():
+#for corrida in scrapy.all_results():
+for corrida in scrapy.live_results():
     for sexo in lista:
        scrapy.results(ano, corrida, sexo, 'PRO')
 
