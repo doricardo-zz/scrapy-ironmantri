@@ -79,6 +79,7 @@ def results(ano, corrida, sexo, categoria, pais=''):
                 else:
                     linha[0] = 'Pos Categ'
                     linha[2] = 'Categ'
+
                 spamwriter.writerow(linha)
 
                 for resultado in resultados:
