@@ -42,6 +42,23 @@ def nome_arquivo(data, corrida, sexo, categoria):
 
     return '{}-{}-{}-{}.csv'.format(data.replace('-',''), corrida, categoria.lower(), sexo )
 
+def index_results():
+    url = ('http://www.ironman.com/triathlon/coverage/live.aspx')
+    r = requests.get(url)
+    #status = r.status_code
+    soup = BeautifulSoup(r.content, 'html.parser')
+
+    links = soup.find_all("a", class_="imageLink", href=True)
+
+    titulo = soup.find_all("h3", class_="first clear", href=True)
+    print(titulo)
+
+    corridas = []
+    for link in links:
+        href = link['href']
+        corridas.append(urlparse(href).query.split('&')[0].split('=')[1])
+    return corridas
+
 def live_results():
     url = ('http://www.ironman.com/triathlon/coverage/live.aspx')
     r = requests.get(url)
@@ -157,6 +174,16 @@ def results_brasil(ano, corrida):
             arquivo = '{}-{}-{}-{}.csv'.format( data.replace('-',''), corrida, categoria.lower(), sexo )
             with open('files/' + arquivo, 'w', newline='') as csvfile:
     #####
+##
+                spamwriter = csv.writer(csvfile)#, delimiter=' ', quotechar=',', quoting=csv.QUOTE_MINIMAL)
+                linha = [ 'Pos Categ', 'Nome', 'Pais', 'Swim', 'Bike', 'Run', 'Total' ]
+                if categoria == 'PRO':
+                    linha[2] = 'Pais'
+                else:
+                    linha[2] = 'Categ'
+                spamwriter.writerow(linha)
+##
+
                 while pagina < total:
 
                     url = ('http://m.ironman.com/Handlers/EventLiveResultsMobile.aspx?year={}&race={}&loc={}&p={}'.format(ano, corrida, country, pagina))
@@ -172,14 +199,13 @@ def results_brasil(ano, corrida):
                             resultados = dictionary['records']
         #####
         #####
-                            spamwriter = csv.writer(csvfile)#, delimiter=' ', quotechar=',', quoting=csv.QUOTE_MINIMAL)
-                            linha = [ 'Pos', 'Nome', 'Pais', 'Swim', 'Bike', 'Run', 'Total' ]
-
-                            if categoria == 'PRO':
-                                linha[2] = 'Pais'
-                            else:
-                                linha[2] = 'Categ'
-                            spamwriter.writerow(linha)
+#
+#                            linha = [ 'Pos Categ', 'Nome', 'Pais', 'Swim', 'Bike', 'Run', 'Total' ]
+#                            if categoria == 'PRO':
+#                                linha[2] = 'Pais'
+#                            else:
+#                                linha[2] = 'Categ'
+#                            spamwriter.writerow(linha)
 
                             for resultado in resultados:
 
