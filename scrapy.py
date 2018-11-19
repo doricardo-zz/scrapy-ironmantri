@@ -45,19 +45,34 @@ def nome_arquivo(data, corrida, sexo, categoria):
 def index_results():
     url = ('http://www.ironman.com/triathlon/coverage/live.aspx')
     r = requests.get(url)
-    #status = r.status_code
     soup = BeautifulSoup(r.content, 'html.parser')
-
-    links = soup.find_all("a", class_="imageLink", href=True)
-
-    titulo = soup.find_all("h3", class_="first clear", href=True)
-    print(titulo)
+    links = soup.find_all("a", class_="titleLink", href=True)
 
     corridas = []
     for link in links:
         href = link['href']
         corridas.append(urlparse(href).query.split('&')[0].split('=')[1])
-    return corridas
+
+    #with open('corridas.json', 'w') as outfile:
+    #    json.dump(corridas, outfile)
+    #return corridas
+
+    student_data = {"students":[]}
+    data_holder = student_data["students"]
+    counter = 0
+
+    for link in links:
+        href = link['href']
+        data_holder.append({'corrida': href})
+        #data_holder.append({'room':counter})
+        counter += 1
+
+    file_path='corridas.json'
+    with open(file_path, 'w') as outfile:
+        print("writing file to: ", file_path)
+        # HERE IS WHERE THE MAGIC HAPPENS
+        json.dump(student_data, outfile)
+    outfile.close()
 
 def live_results():
     url = ('http://www.ironman.com/triathlon/coverage/live.aspx')
@@ -99,6 +114,7 @@ def results_todos(ano, corrida):
 def results(ano, corrida, sexo, categoria, pais=''):
     #pais=> &loc=BRA
     #http://m.ironman.com/Handlers/EventLiveResultsMobile.aspx?year=2017&race=worldchampionship70.3&loc=BRA
+    #http://&sex=F
     url = ('http://m.ironman.com/Handlers/EventLiveResultsMobile.aspx?year={}&race={}&sex={}&agegroup={}&loc={}'.format(ano, corrida, sexo, categoria, pais))
 
     r = requests.get(url)
@@ -176,7 +192,7 @@ def results_brasil(ano, corrida):
     #####
 ##
                 spamwriter = csv.writer(csvfile)#, delimiter=' ', quotechar=',', quoting=csv.QUOTE_MINIMAL)
-                linha = [ 'Pos Categ', 'Nome', 'Pais', 'Swim', 'Bike', 'Run', 'Total' ]
+                linha = [ 'Pos Categ', 'Nome', 'Pais', 'Sexo', 'Swim', 'Bike', 'Run', 'Total' ]
                 if categoria == 'PRO':
                     linha[2] = 'Pais'
                 else:
@@ -217,10 +233,10 @@ def results_brasil(ano, corrida):
                                     else:
 
                                         if categoria == '':
-                                            linha = [ resultado['OverallRank'], resultado['Name'].upper(), resultado['AgeGroup'], resultado['SwimTime'],
+                                            linha = [ resultado['OverallRank'], resultado['Name'].upper(), resultado['AgeGroup'], resultado['Gender'], resultado['SwimTime'],
                                                       resultado['BikeTime'], resultado['RunTime'], resultado['Time'] ]
                                         else:
-                                            linha = [ resultado['AgeRank'], resultado['Name'].upper(), resultado['AgeGroup'], resultado['SwimTime'],
+                                            linha = [ resultado['AgeRank'], resultado['Name'].upper(), resultado['AgeGroup'], resultado['Gender'], resultado['SwimTime'],
                                                       resultado['BikeTime'], resultado['RunTime'], resultado['Time'] ]
 
                                     if linha[0] != '99999':

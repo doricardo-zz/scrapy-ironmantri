@@ -6,12 +6,16 @@ lista = ['M','F']
 ano = sys.argv[1]
 
 print('===> Início Scrap ironmantri.com')
-#for corrida in scrapy.all_results():
-for corrida in scrapy.live_results():
+for corrida in scrapy.all_results():
+#for corrida in scrapy.live_results():
     for sexo in lista:
        scrapy.results(ano, corrida, sexo, 'PRO')
 
     scrapy.results_brasil(ano, corrida)
+
+time.sleep(1)
+print('===> Gerando indíce de corridas')
+
 
 time.sleep(1)
 print('===> Início Upload ftp.doricardo.com')
