@@ -14,7 +14,7 @@ for corrida in scrapy.all_results():
     scrapy.results_brasil(ano, corrida)
 
 time.sleep(1)
-print('===> Gerando indíce de corridas')
+print('===> Gerando indíce de corridas. PENDENTE')
 
 
 time.sleep(1)

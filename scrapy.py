@@ -107,10 +107,6 @@ def all_results():
 #def results_brasil(ano, corrida):
 #    return results(ano, corrida, '', '', 'BRA')
 
-def results_todos(ano, corrida):
-
-    return results_novo(ano, corrida)
-
 def results(ano, corrida, sexo, categoria, pais=''):
     #pais=> &loc=BRA
     #http://m.ironman.com/Handlers/EventLiveResultsMobile.aspx?year=2017&race=worldchampionship70.3&loc=BRA
@@ -186,11 +182,10 @@ def results_brasil(ano, corrida):
         if dictionary['records'] and len(dictionary['records']) > 1:
             total = dictionary['lastPage']
             data = dictionary['raceDate']
-    #####
+
             arquivo = '{}-{}-{}-{}.csv'.format( data.replace('-',''), corrida, categoria.lower(), sexo )
             with open('files/' + arquivo, 'w', newline='') as csvfile:
-    #####
-##
+
                 spamwriter = csv.writer(csvfile)#, delimiter=' ', quotechar=',', quoting=csv.QUOTE_MINIMAL)
                 linha = [ 'Pos Categ', 'Nome', 'Pais', 'Sexo', 'Swim', 'Bike', 'Run', 'Total' ]
                 if categoria == 'PRO':
@@ -198,7 +193,6 @@ def results_brasil(ano, corrida):
                 else:
                     linha[2] = 'Categ'
                 spamwriter.writerow(linha)
-##
 
                 while pagina < total:
 
@@ -213,15 +207,6 @@ def results_brasil(ano, corrida):
                         if dictionary['records'] and len(dictionary['records']) > 1:
 
                             resultados = dictionary['records']
-        #####
-        #####
-#
-#                            linha = [ 'Pos Categ', 'Nome', 'Pais', 'Swim', 'Bike', 'Run', 'Total' ]
-#                            if categoria == 'PRO':
-#                                linha[2] = 'Pais'
-#                            else:
-#                                linha[2] = 'Categ'
-#                            spamwriter.writerow(linha)
 
                             for resultado in resultados:
 
@@ -253,6 +238,69 @@ def results_brasil(ano, corrida):
                 if pagina > 0:
                     print("OK.: " + arquivo)
 
+def results_full(ano, corrida, sexo, categoria):
+
+    #categoria = 'brasileiros'
+    #country = 'BRA'
+    pagina = 1
+    total  = 1
+    #sexo = 'todos'
+
+    url = ('http://m.ironman.com/Handlers/EventLiveResultsMobile.aspx?year={}&race={}&sex={}&agegroup={}'.format(ano, corrida, sexo, categoria))
+
+    r = requests.get(url)
+    status = r.status_code
+
+    if status == 200:
+
+        dictionary = json.loads(r.content)
+
+        if dictionary['records'] and len(dictionary['records']) > 1:
+            total = dictionary['lastPage']
+            data = dictionary['raceDate']
+
+            arquivo = '{}-{}-{}-{}.csv'.format( data.replace('-',''), corrida, categoria.lower(), sexo )
+            with open('files/' + arquivo, 'w', newline='') as csvfile:
+                spamwriter = csv.writer(csvfile)
+                linha = [ 'Pos', 'Nome', 'Pais', 'Categ', 'Pos Categ', 'Swim', 'Bike', 'Run', 'Total', 'Status','Sexo' ]
+                spamwriter.writerow(linha)
+
+                while pagina < total:
+
+                    url = ('http://m.ironman.com/Handlers/EventLiveResultsMobile.aspx?year={}&race={}&sex={}&agegroup={}&p={}'.format(ano, corrida, sexo, categoria, pagina))
+                    r = requests.get(url)
+                    status = r.status_code
+
+                    if status == 200:
+
+                        dictionary = json.loads(r.content)
+
+                        if dictionary['records'] and len(dictionary['records']) > 1:
+
+                            resultados = dictionary['records']
+
+                            for resultado in resultados:
+
+                                #if resultado['Time'].find('--') != 0:
+
+                                #    linha = [ resultado['OverallRank'], resultado['Name'].upper(), resultado['Country'], resultado['AgeGroup'], resultado['AgeRank'], resultado['SwimTime'],
+                                #                resultado['BikeTime'], resultado['RunTime'], resultado['Time'], resultado['Status'] ]
+
+                                #    if linha[0] != '99999':
+                                #        spamwriter.writerow(linha)
+
+                                linha = [ resultado['OverallRank'], resultado['Name'].upper(), resultado['Country'], resultado['AgeGroup'], resultado['AgeRank'], resultado['SwimTime'],
+                                            resultado['BikeTime'], resultado['RunTime'], resultado['Time'], resultado['Status'], sexo ]
+                                spamwriter.writerow(linha)
+
+                        else:
+
+                            print('ERR: Não disponível: {} {} {}'.format(corrida, sexo, categoria))
+
+                    pagina += 1
+
+                if pagina > 0:
+                    print("OK.: " + arquivo)
 
 if __name__ == "__main__":
     ano = 2018
