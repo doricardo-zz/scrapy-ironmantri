@@ -1,14 +1,14 @@
-import sys
+﻿import sys
 import scrapy
 import time
 import os
 
 categorias = ['PRO','18-24','25-29','30-34','35-39','40-44','45-49','50-54','55-59','60-64','65-69','70-74','C']
 lista = ['M','F']
-ano = '2018' #sys.argv[1]
-corrida = 'brazil'
+ano = '2019' #sys.argv[1]
+corrida = 'uruguay70.3'
 
-os.remove('files/' + ano + '-' + corrida + '-full.csv')
+#os.remove('files/' + ano + '-' + corrida + '-full.csv')
 
 print('===> Início Scrap ironmantri.com FULL')
 #for corrida in scrapy.all_results():
@@ -29,12 +29,12 @@ with open('files/' + ano + '-' + corrida + '-full.csv', 'w') as outfile:
             outfile.write(infile.read())
 
 time.sleep(5)
-for fname in filenames:
-    os.remove('files/' + fname)
+#for fname in filenames:
+#    os.remove('files/' + fname)
 
 time.sleep(1)
 print('===> Início Upload ftp.doricardo.com')
-#scrapy.upload()
+scrapy.upload()
 print('===> Fim')
 #To-do: baixar PDFs de start list nos links abaixo
 #http://www.ironman.com/triathlon/organizations/pro-membership/event-registration/start-lists.aspx

@@ -262,10 +262,10 @@ def results_full(ano, corrida, sexo, categoria):
             arquivo = '{}-{}-{}-{}.csv'.format( data.replace('-',''), corrida, categoria.lower(), sexo )
             with open('files/' + arquivo, 'w', newline='') as csvfile:
                 spamwriter = csv.writer(csvfile)
-                linha = [ 'Pos', 'Nome', 'Pais', 'Categ', 'Pos Categ', 'Swim', 'Bike', 'Run', 'Total', 'Status','Sexo' ]
+                linha = [ 'Bib', 'Pos', 'Nome', 'Pais', 'Categ', 'Pos Categ', 'Swim', 'Bike', 'Run', 'Total', 'Status','Sexo' ]
                 spamwriter.writerow(linha)
 
-                while pagina < total:
+                while pagina <= total:
 
                     url = ('http://m.ironman.com/Handlers/EventLiveResultsMobile.aspx?year={}&race={}&sex={}&agegroup={}&p={}'.format(ano, corrida, sexo, categoria, pagina))
                     r = requests.get(url)
@@ -289,7 +289,7 @@ def results_full(ano, corrida, sexo, categoria):
                                 #    if linha[0] != '99999':
                                 #        spamwriter.writerow(linha)
 
-                                linha = [ resultado['OverallRank'], resultado['Name'].upper(), resultado['Country'], resultado['AgeGroup'], resultado['AgeRank'], resultado['SwimTime'],
+                                linha = [ resultado['Bib'], resultado['OverallRank'], resultado['Name'].upper(), resultado['Country'], resultado['AgeGroup'], resultado['AgeRank'], resultado['SwimTime'],
                                             resultado['BikeTime'], resultado['RunTime'], resultado['Time'], resultado['Status'], sexo ]
                                 spamwriter.writerow(linha)
 
