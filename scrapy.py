@@ -161,7 +161,7 @@ def results(ano, corrida, sexo, categoria, pais=''):
                     print("OK.: " + arquivo)
         else:
 
-            print('ERR: Não disponível: {} {} {}'.format(corrida, sexo, categoria))
+            print('ERR: Nao disponivel: {} {} {}'.format(corrida, sexo, categoria))
 
 def results_brasil(ano, corrida):
 
@@ -231,7 +231,7 @@ def results_brasil(ano, corrida):
                             #    print("OK.: " + arquivo)
                         else:
 
-                            print('ERR: Não disponível: {} {} {}'.format(corrida, sexo, categoria))
+                            print('ERR: Nao disponivel: {} {} {}'.format(corrida, sexo, categoria))
 
                     pagina += 1
 
@@ -295,7 +295,7 @@ def results_full(ano, corrida, sexo, categoria):
 
                         else:
 
-                            print('ERR: Não disponível: {} {} {}'.format(corrida, sexo, categoria))
+                            print('ERR: Nao disponivel: {} {} {}'.format(corrida, sexo, categoria))
 
                     pagina += 1
 

@@ -1,16 +1,17 @@
-﻿import sys
+﻿
+import sys
 import scrapy
 import time
 import os
 
 categorias = ['PRO','18-24','25-29','30-34','35-39','40-44','45-49','50-54','55-59','60-64','65-69','70-74','C']
 lista = ['M','F']
-ano = '2019' #sys.argv[1]
-corrida = 'uruguay70.3'
+ano = sys.argv[1]
+corrida = sys.argv[2]
 
 #os.remove('files/' + ano + '-' + corrida + '-full.csv')
 
-print('===> Início Scrap ironmantri.com FULL')
+print('===> Inicio Scrap ironmantri.com FULL')
 #for corrida in scrapy.all_results():
 
 for sexo in lista:
@@ -18,7 +19,7 @@ for sexo in lista:
         scrapy.results_full(ano, corrida, sexo, categoria)
 
 time.sleep(3)
-print('===> Gerando um único arquivo')
+print('===> Gerando um unico arquivo')
 
 files = os.listdir('files/')
 filenames = [f for f in files if f.endswith('.csv') ]
@@ -33,7 +34,7 @@ time.sleep(5)
 #    os.remove('files/' + fname)
 
 time.sleep(1)
-print('===> Início Upload ftp.doricardo.com')
+print('===> Inicio Upload ftp.doricardo.com')
 scrapy.upload()
 print('===> Fim')
 #To-do: baixar PDFs de start list nos links abaixo

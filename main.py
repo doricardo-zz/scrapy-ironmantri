@@ -1,3 +1,4 @@
+
 import sys
 import scrapy
 import time
@@ -5,7 +6,7 @@ import time
 lista = ['M','F']
 ano = sys.argv[1]
 
-print('===> Início Scrap ironmantri.com')
+print('===> Inicio Scrap ironmantri.com')
 for corrida in scrapy.all_results():
 #for corrida in scrapy.live_results():
     for sexo in lista:
@@ -14,11 +15,11 @@ for corrida in scrapy.all_results():
     scrapy.results_brasil(ano, corrida)
 
 time.sleep(1)
-print('===> Gerando indíce de corridas. PENDENTE')
+print('===> Gerando indice de corridas. PENDENTE')
 
 
 time.sleep(1)
-print('===> Início Upload ftp.doricardo.com')
+print('===> Inicio Upload ftp.doricardo.com')
 scrapy.upload()
 print('===> Fim')
 #To-do: baixar PDFs de start list nos links abaixo
