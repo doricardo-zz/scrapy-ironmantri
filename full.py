@@ -30,12 +30,12 @@ with open('files/' + ano + '-' + corrida + '-full.csv', 'w') as outfile:
             outfile.write(infile.read())
 
 time.sleep(5)
-#for fname in filenames:
-#    os.remove('files/' + fname)
+for fname in filenames:
+    os.remove('files/' + fname)
 
-time.sleep(1)
-print('===> Inicio Upload ftp.doricardo.com')
-scrapy.upload()
-print('===> Fim')
+#time.sleep(1)
+#print('===> Inicio Upload ftp.doricardo.com')
+#scrapy.upload()
+#print('===> Fim')
 #To-do: baixar PDFs de start list nos links abaixo
 #http://www.ironman.com/triathlon/organizations/pro-membership/event-registration/start-lists.aspx

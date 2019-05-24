@@ -30,6 +30,9 @@ def upload():
 
         except ftplib.all_errors as e:
             print('FTP error:', e)
+            ftp.close()
+    
+    ftp.quit()
 
 def nome_arquivo(data, corrida, sexo, categoria):
 
