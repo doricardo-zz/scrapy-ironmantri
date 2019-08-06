@@ -24,14 +24,14 @@ print('===> Gerando um unico arquivo')
 files = os.listdir('files/')
 filenames = [f for f in files if f.endswith('.csv') ]
 
-with open('files/' + ano + '-' + corrida + '-full.csv', 'w') as outfile:
+with open('files/' + ano + '-' + corrida + '-all-athletes.csv', 'w') as outfile:
     for fname in filenames:
         with open('files/' + fname) as infile:
             outfile.write(infile.read())
 
-time.sleep(5)
-for fname in filenames:
-    os.remove('files/' + fname)
+#time.sleep(5)
+#for fname in filenames:
+    #os.remove('files/' + fname)
 
 #time.sleep(1)
 #print('===> Inicio Upload ftp.doricardo.com')

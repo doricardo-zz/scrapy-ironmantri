@@ -291,10 +291,12 @@ def results_full(ano, corrida, sexo, categoria):
 
                                 #    if linha[0] != '99999':
                                 #        spamwriter.writerow(linha)
-
-                                linha = [ resultado['Bib'], resultado['OverallRank'], resultado['Name'].upper(), resultado['Country'], resultado['AgeGroup'], resultado['AgeRank'], resultado['SwimTime'],
-                                            resultado['BikeTime'], resultado['RunTime'], resultado['Time'], resultado['Status'], sexo ]
-                                spamwriter.writerow(linha)
+                                try:   
+                                    linha = [ resultado['Bib'], resultado['OverallRank'], resultado['Name'].upper(), resultado['Country'], resultado['AgeGroup'], resultado['AgeRank'], resultado['SwimTime'],
+                                                resultado['BikeTime'], resultado['RunTime'], resultado['Time'], resultado['Status'], sexo ]
+                                    spamwriter.writerow(linha)
+                                except:
+                                    print("Erro Bib: " + str(resultado['Bib']) + " Categoria: " + str(resultado['AgeGroup']) + " Nome: " + resultado['Name'].upper())
 
                         else:
 

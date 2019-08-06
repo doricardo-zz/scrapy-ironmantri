@@ -1,0 +1,22 @@
+<html>
+	<head>
+	    <title>Ironman Races</title>
+	    <script type="text/javascript" src="/eel.js"></script>
+	    <script>
+	        async function loadRaces() {
+	            let value = await eel.loadRaces()();
+	            //alert(value);
+	        }
+
+			eel.expose(loadResults_js);
+	        async function loadResults_js(value) {
+	            alert(value);
+	            eel.loadResults(value); // Call a Python function
+	            return value;
+	        }
+	    </script>
+	</head>
+	<body onload="loadRaces()">
+		<button onclick="loadResults_js('alagoas70.3')">Carregar corrida</button>
+	</body>
+<html>
