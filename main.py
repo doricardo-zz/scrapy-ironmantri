@@ -18,9 +18,9 @@ time.sleep(1)
 print('===> Gerando indice de corridas. PENDENTE')
 
 
-time.sleep(1)
-print('===> Inicio Upload ftp.doricardo.com')
-scrapy.upload()
-print('===> Fim')
+#time.sleep(1)
+#print('===> Inicio Upload ftp.doricardo.com')
+#scrapy.upload()
+#print('===> Fim')
 #To-do: baixar PDFs de start list nos links abaixo
 #http://www.ironman.com/triathlon/organizations/pro-membership/event-registration/start-lists.aspx
